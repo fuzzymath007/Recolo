@@ -9,6 +9,8 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var subTitleTextField: UITextField!
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 

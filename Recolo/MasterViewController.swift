@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, AddEditTableViewControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
@@ -33,6 +33,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
+        }
+    }
+    
+    func displayFirstContactsOrInstructions(){
+        if let splitViewController = self.splitViewController{
+            if !splitViewController.collapsed{
+                //disply contact is there is one
+                if self.tableView.numberOfRowsInSection(0) > 0{
+                    let indexPath = NSIndexPath(forRow: 0, inSection: 0))
+                }
+            }
         }
     }
 

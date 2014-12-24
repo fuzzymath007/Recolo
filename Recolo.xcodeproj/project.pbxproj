@@ -15,6 +15,8 @@
 		573A9BDF1A4A096700E918E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 573A9BDE1A4A096700E918E9 /* Images.xcassets */; };
 		573A9BE21A4A096700E918E9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 573A9BE01A4A096700E918E9 /* LaunchScreen.xib */; };
 		573A9BEE1A4A096700E918E9 /* RecoloTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A9BED1A4A096700E918E9 /* RecoloTests.swift */; };
+		573A9BF81A4A0A8A00E918E9 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A9BF71A4A0A8A00E918E9 /* Note.swift */; };
+		573A9BFA1A4A135900E918E9 /* AddEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A9BF91A4A135900E918E9 /* AddEditTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		573A9BE71A4A096700E918E9 /* RecoloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecoloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		573A9BEC1A4A096700E918E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		573A9BED1A4A096700E918E9 /* RecoloTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoloTests.swift; sourceTree = "<group>"; };
+		573A9BF71A4A0A8A00E918E9 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		573A9BF91A4A135900E918E9 /* AddEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,9 +89,11 @@
 				573A9BD71A4A096700E918E9 /* MasterViewController.swift */,
 				573A9BD91A4A096700E918E9 /* DetailViewController.swift */,
 				573A9BDB1A4A096700E918E9 /* Main.storyboard */,
+				573A9BF91A4A135900E918E9 /* AddEditTableViewController.swift */,
 				573A9BDE1A4A096700E918E9 /* Images.xcassets */,
 				573A9BE01A4A096700E918E9 /* LaunchScreen.xib */,
 				573A9BD41A4A096700E918E9 /* Recolo.xcdatamodeld */,
+				573A9BF71A4A0A8A00E918E9 /* Note.swift */,
 				573A9BD01A4A096700E918E9 /* Supporting Files */,
 			);
 			path = Recolo;
@@ -218,6 +224,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				573A9BFA1A4A135900E918E9 /* AddEditTableViewController.swift in Sources */,
+				573A9BF81A4A0A8A00E918E9 /* Note.swift in Sources */,
 				573A9BD31A4A096700E918E9 /* AppDelegate.swift in Sources */,
 				573A9BD61A4A096700E918E9 /* Recolo.xcdatamodeld in Sources */,
 				573A9BD81A4A096700E918E9 /* MasterViewController.swift in Sources */,
