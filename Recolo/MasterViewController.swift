@@ -26,14 +26,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
+        
+        if let split = self.splitViewController{
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        displayFirstContactsOrInstructions()
     }
     
     func displayFirstContactsOrInstructions(){
@@ -41,11 +44,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             if !splitViewController.collapsed{
                 //disply contact is there is one
                 if self.tableView.numberOfRowsInSection(0) > 0{
-                    let indexPath = NSIndexPath(forRow: 0, inSection: 0))
+                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                    self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.Top)
+                    self.performSegueWithIdentifier("showNoteDetail", sender: self)
+                    }else{
+                        self.performSegueWithIdentifier("showInstructions", sender: self)
+                    }
                 }
             }
         }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,18 +77,52 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             abort()
         }
     }
+    
+    func didSaveNote(controller: AddEditTableViewController){
+        //insert new note into NSManagedObjectContext
+        
+        let context = self.fetchedResultsController.managedObjectContext
+        context.insertObject(controller.note!)
+        self.navigationController?.popToRootViewControllerAnimated(TRUE)
+        
+        //save the context to save the note
+        var error: NSError? = nil
+        if !context.save(&error){
+            displayError(error, title:"Error Saving Data", message:"Unable to save note")
+        }else{
+            let sectionInfo = self.fetchedResultsController.sections![0] as NSFetchedResultsSectionInfo
+            if let row = find(sectionInfo as [NSManagedObjectContext], controller.note!){
+                let path = NSIndexPath(forRow: row, inSection: 0)
+                tableView.selectRowAtIndexPath(path, animated: <#Bool#>, scrollPosition: <#UITableViewScrollPosition#>))
+            }
+        }
+    }
 
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow() {
-            let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+        if segue.identifier == "showNoteDetail" {
+            if let indexPath = self.tableView.indexPathForSelectedRow(){
+                //get the note for the cell that was selected
+                let selectedNote = self.fetchedResultsController.objectAtIndexPath(indexPath) as Note
+                
+                //configure for DetailViewController
                 let controller = (segue.destinationViewController as UINavigationController).topViewController as DetailViewController
-                controller.detailItem = object
+                controller.delegate = self
+                controller.detailItem = selectedNote
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
+        }else if segue.identifier == "showAddNote"{
+        //create a new Contact object that is not yet managed
+            let entity = self.fetchedResultsController.fetchRequest.entity!
+            let newNote = Note(entity: entity, insertIntoManagedObjectContext: nil)
+            
+            let controller = (segue.destinationViewController as UINavigationController).topViewController as AddEditTableViewController
+            controller.navigationItem.title = "Add Note"
+            controller.delegate = self
+            controller.editingNote = false
+            controller.note = newNote
         }
     }
 
